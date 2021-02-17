@@ -1,69 +1,52 @@
 <template>
-  <div class="grid sm:grid-cols-1 gap-4 lg:grid-cols-3">
-    <div class="box bg-gray-500">1</div>
-    <div class="bg-gray-500">2</div>
-    <div class="bg-gray-500">3</div>
-  </div>
-
-  <!-- <div class="">
-    <Modal v-if="visible" :onAdd="addUu" :sel="selected" @closepopup="toggle" />
-    <div class="row">
-      <div class="col-2">
-        <div class="form-group">
-          <label for="s">choise system</label>
-          <select
-            class="form-control"
-            id="s"
-            v-model="selected"
-            @change="toggle"
-          >
-            <option v-for="(item, i) in list_uu" :key="i" :value="item">
-              {{ item.text }}
-            </option>
-          </select>
-        </div>
-      </div>
-      <div class="col-sm">
-        <UuList @select="selectUu" :uus="uus" />
-      </div>
-      <div class="col-sm">
-        <UuDetail :uu="current" @remove="removeUu" />
-      </div>
+  <div class="grid sm:grid-cols-1 gap-4 md:grid-cols-4 px-2">
+    <div>
+      Отопление
+      <div class="text-sm">{{ project.rash.rashod_ot }}</div>
+      ГВС
+      <div class="text-sm">{{ project.uu_gvs }}</div>
     </div>
-  </div> -->
+    <div class="text-xs px-1"><UuCo :project="project" /></div>
+    <div class="text-xs"><UuGvs :project="project" /></div>
+  </div>
 </template>
 
 <script>
-import { ref, reactive } from "vue";
-import Modal from "../components/modal.vue";
-// import AddUu from "@/components/AddUu";
-import UuDetail from "../components/UuDetail.vue";
-import UuList from "../components/UuList.vue";
-import { useArrayUu } from "../composition/uus";
-import { useToggle } from "../composition/toggle";
+import { ref, reactive, watch, computed } from "vue";
+import { useStore } from "vuex";
+import UuCo from "../components/UuCo.vue";
+import UuGvs from "../components/UuGvs.vue";
+import { OBJ } from "../utils/clasess";
 
 export default {
   name: "Home",
   components: {
-    Modal,
-    UuList,
-    UuDetail,
+    UuCo,
+    UuGvs,
   },
 
   setup() {
-    const selected = reactive({
-      text: "",
-      value: "",
+    const store = useStore();
+    const data_store = computed(() => store.state.Isx.DATA);
+    const ot_store = computed(() => store.state.Isx.ot);
+    const gvs_store = computed(() => store.state.Isx.gvs);
+    const project_store = ref(computed(() => store.state.Isx.project));
+
+    if (!project_store.value.OBJ) {
+      const add_class = ref(
+        new OBJ({
+          DATA: data_store.value,
+          OT: ot_store.value,
+          GVS: gvs_store.value,
+        })
+      );
+      project_store.value.OBJ = add_class.value;
+    }
+    const project = ref(project_store.value.OBJ);
+    watch(project.value, () => {
+      console.log("PROJECT WAS CHANGED!", project.value);
     });
-
-    const list_uu = ref([
-      { text: "теплоснабжение", value: "ts" },
-      { text: "отопление", value: "ot" },
-      { text: "вентиляция", value: "vent" },
-      { text: "ГВС", value: "gvs" },
-    ]);
-
-    return { list_uu, selected, ...useArrayUu(), ...useToggle() };
+    return { project };
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <header
-    class="bg-gray-900 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
+    class="sticky top-0 w-screen bg-gray-900 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
   >
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div>
@@ -30,6 +30,7 @@
     <nav
       :class="isOpen ? 'block' : 'hidden'"
       class="px-2 pt-2 pb-4 sm:flex sm:p-0"
+      @click="isOpen = !isOpen"
     >
       <router-link
         to="/"
@@ -55,7 +56,7 @@
       >
     </nav>
   </header>
-  <div class="mx-auto w-full px-2 py-6"><router-view /></div>
+  <div class="w-screen mx-auto px-2 py-2 mt-2"><router-view /></div>
 </template>
 
 <script>

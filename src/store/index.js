@@ -1,4 +1,6 @@
 import { createStore } from 'vuex'
+import Rekv from "./rekv";
+import Isx from "./isx";
 
 export default createStore({
   state: {
@@ -8,5 +10,6 @@ export default createStore({
   actions: {
   },
   modules: {
+    Rekv, Isx
   }
 })

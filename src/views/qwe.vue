@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end">
+  <div class="w-min">
     <button class="mr-2" aria-label="Open Menu" @click="drawer">
       <svg
         fill="none"
@@ -32,23 +32,31 @@
     </transition>
 
     <section
-      class="absolute inset-y-0 left-0 max-w-full flex overflow-hidden"
+      class="absolute inset-y-0 right-0 pl-10 max-w-full flex overflow-hidden"
       aria-labelledby="slide-over-heading"
     >
       <transition
         appear
         enter-active-class="transform transition ease-in-out duration-500 sm:duration-700"
-        enter-from-class="-translate-x-full"
-        enter-to-class="-translate-x-0"
-        leave-from-class="-translate-x-0"
+        enter-from-class="translate-x-full"
+        enter-to-class="translate-x-0"
+        leave-from-class="translate-x-0"
         leave-active-class="transform transition ease-in-out duration-500 sm:duration-700"
-        leave-to-class="-translate-x-full"
+        leave-to-class="translate-x-full"
       >
         <div v-show="isOpen" class="relative w-screen max-w-md">
-          <div
-            class="h-full flex flex-col p-2 bg-yellow-800 shadow-xl overflow-y-scroll"
+          <transition
+            enter-from-class="opacity-0"
+            enter-active-class="transition-opacity ease-in-out duration-500"
+            enter-to-class="opacity-100"
+            leave-from-class="opacity-100"
+            leave-active-class="transition-opacity ease-in-out duration-500"
+            leave-to-class="opacity-0"
           >
-            <div class="inline-flex justify-end">
+            <div
+              v-show="isOpen"
+              class="absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4"
+            >
               <button
                 @click="drawer"
                 class="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
@@ -57,6 +65,7 @@
 
                 <svg
                   class="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -71,6 +80,10 @@
                 </svg>
               </button>
             </div>
+          </transition>
+          <div
+            class="h-full flex flex-col py-6 bg-yellow-800 shadow-xl overflow-y-scroll"
+          >
             <div class="px-4 sm:px-6">
               <h2
                 id="slide-over-heading"

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex justify-end">
+  <div class="w-min">
     <button class="mr-2" aria-label="Open Menu" @click="drawer">
       <svg
         fill="none"
@@ -14,7 +14,8 @@
       </svg>
     </button>
   </div>
-  <div class="inset-0 overflow-hidden">
+
+  <div v-show="isOpen" class="absolute inset-0 overflow-hidden">
     <transition
       enter-active-class="transition-opacity ease-in-out duration-500"
       enter-from-class="opacity-0"
@@ -25,38 +26,45 @@
     >
       <div
         v-show="isOpen"
-        @click="drawer"
-        class="absolute inset-0 bg-gray-500 bg-opacity-75"
+        class="absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
         aria-hidden="true"
       ></div>
     </transition>
-
-    <section
-      class="absolute inset-y-0 left-0 max-w-full flex overflow-hidden"
-      aria-labelledby="slide-over-heading"
+    <transition
+      enter-class="translate-x-full"
+      enter-active-class="transform transition ease-in-out duration-500 sm:duration-700"
+      enter-to-class="translate-x-0"
+      leave-class="translate-x-0"
+      leave-active-class="transform transition ease-in-out duration-500 sm:duration-700"
+      leave-to-class="translate-x-full"
     >
-      <transition
-        appear
-        enter-active-class="transform transition ease-in-out duration-500 sm:duration-700"
-        enter-from-class="-translate-x-full"
-        enter-to-class="-translate-x-0"
-        leave-from-class="-translate-x-0"
-        leave-active-class="transform transition ease-in-out duration-500 sm:duration-700"
-        leave-to-class="-translate-x-full"
+      <section
+        v-show="isOpen"
+        class="absolute inset-y-0 right-0 pl-10 max-w-full flex"
+        aria-labelledby="slide-over-heading"
       >
-        <div v-show="isOpen" class="relative w-screen max-w-md">
-          <div
-            class="h-full flex flex-col p-2 bg-yellow-800 shadow-xl overflow-y-scroll"
+        <div class="relative w-screen max-w-md">
+          <transition
+            enter-class="opacity-0"
+            enter-active-class="transition-opacity ease-in-out duration-500"
+            enter-to-class="opacity-100"
+            leave-class="opacity-100"
+            leave-active-class="transition-opacity ease-in-out duration-500"
+            leave-to-class="opacity-0"
           >
-            <div class="inline-flex justify-end">
+            <div
+              v-show="isOpen"
+              class="absolute top-0 left-0 -ml-8 pt-4 pr-2 flex sm:-ml-10 sm:pr-4 transition-opacity"
+            >
               <button
-                @click="drawer"
+                @click="isOpen = false"
                 class="rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-white"
               >
                 <span class="sr-only">Close panel</span>
 
                 <svg
                   class="h-6 w-6"
+                  xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -71,6 +79,10 @@
                 </svg>
               </button>
             </div>
+          </transition>
+          <div
+            class="h-full flex flex-col py-6 bg-white shadow-xl overflow-y-scroll"
+          >
             <div class="px-4 sm:px-6">
               <h2
                 id="slide-over-heading"
@@ -89,8 +101,8 @@
             </div>
           </div>
         </div>
-      </transition>
-    </section>
+      </section>
+    </transition>
   </div>
 </template>
 <script>

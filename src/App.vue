@@ -1,10 +1,27 @@
 <template>
   <header
-    class="sticky top-0 w-screen bg-gray-900 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
+    class="sticky top-0 w-screen bg-gray-600 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
   >
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div>
-        <img class="h-8" src="./assets/logo.svg" alt="Intelpribor" />
+        <!-- <img class="h-8" src="./assets/logo.svg" alt="Intelpribor" /> -->
+        <button
+          class="text-gray-500 hover:text-white focus:text-white focus:outline-none"
+          aria-label="Open Menu"
+          @click="toggle"
+        >
+          <svg
+            fill="none"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            class="w-8 h-8"
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
       </div>
       <div class="sm:hidden">
         <button
@@ -12,17 +29,17 @@
           type="button"
           class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
         >
-          <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-            <path
-              v-if="isOpen"
-              fill-rule="evenodd"
-              d="M18.278 16.864a1 1 0 0 1-1.414 1.414l-4.829-4.828-4.828 4.828a1 1 0 0 1-1.414-1.414l4.828-4.829-4.828-4.828a1 1 0 0 1 1.414-1.414l4.829 4.828 4.828-4.828a1 1 0 1 1 1.414 1.414l-4.828 4.829 4.828 4.828z"
-            />
-            <path
-              v-if="!isOpen"
-              fill-rule="evenodd"
-              d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z"
-            />
+          <svg
+            fill="none"
+            class="h-8 w-8"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          >
+            <path v-if="isOpen" d="M6 18L18 6M6 6l12 12" />
+            <path v-if="!isOpen" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
       </div>
@@ -56,14 +73,29 @@
       >
     </nav>
   </header>
+  <div class="overflow-hidden">
+    <Rekv :visible="visible" @close_rekv="toggle" />
+  </div>
+
   <div class="w-screen mx-auto px-2 py-2 mt-2"><router-view /></div>
 </template>
 
 <script>
+import { ref, watch } from "vue";
+import { useToggle } from "./utils/toggle";
+import Rekv from "./components/rekv.vue";
 export default {
-  data() {
+  components: {
+    Rekv,
+  },
+  setup() {
+    const isOpen = ref(false);
+    // const visible = ref(false);
+
     return {
-      isOpen: false,
+      isOpen,
+      ...useToggle(),
+      // visible,
     };
   },
 };

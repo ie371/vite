@@ -30,7 +30,8 @@
       @apply block 
       text-xss
       font-medium
-      pl-1
+      pl-2
+      leading-4
       text-red-600;
     }
     h3 {

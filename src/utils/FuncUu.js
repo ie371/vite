@@ -24,29 +24,21 @@ export function podbor(Gv) {
 	var THRESHOLD = 1.5;
 	var du = [];
 	var d = [];
-	// var v = [];
 	du = [15, 25, 32, 40, 50, 65, 80, 100, 150, 200, 300];
 	du.forEach(function (el) {
 		var a1 = Math.pow(el * 0.001, 2) / 4;
 		var vs = Gv * 1 / (3.14 * a1) / 3600;
 		if (vs.toFixed(2) <= +THRESHOLD) {
 			d.push(el);
-			// v.push(+vs.toFixed(2));
 		}
 	});
 	if (d.length == 0) {
 		var eel = du[du.length - 1];
-		// var a2 = Math.pow(eel * 0.001, 2) / 4;
-		// var vs2 = Gv * 1 / (3.14 * a2) / 3600;
 		d.push(eel);
-		// v.push(+vs2.toFixed(2));
 	}
 	if (d.length == 1) {
 		eel = du[du.length - 1];
-		// a2 = Math.pow(eel * 0.001, 2) / 4;
-		// vs2 = Gv * 1 / (3.14 * a2) / 3600;
 		d.push(eel);
-		// v.push(+vs2.toFixed(2));
 	}
 	return { d: d[0], dt: d[1] };
 }
@@ -63,13 +55,13 @@ export function rash_co(isx) {
 	return { G1m, G2m, G1v, G2v, G9v, PL1, PL2 };
 }
 
-export function rash_gvs(isx) {
-	let { q, qs, t1, t2, p1, p2, Kchn, knp, ktp, beta, txvL, txvZ, sx_gvs, t1L, t2L, t1_ot } = isx;
+export function rash_gvs(isx, type, t1_ot) {
+	let { q, qs, t1, t2, p1, p2, Kchn, knp, ktp, beta, txvL, txvZ, t1L, t2L } = isx;
 	let koef = 1;
 	let tt3 = '';
 	let tt4 = '';
 
-	if (sx_gvs == '1st' || sx_gvs == '2st') {
+	if (type == '1st' || type == '2st') {
 		t1 = t1L;
 		tt3 = t1_ot;
 		tt4 = 55;
@@ -79,7 +71,7 @@ export function rash_gvs(isx) {
 		tt3 = t1;
 		tt4 = t2;
 	}
-	sx_gvs == '2st' ? (koef = 0.55) : '';
+	type == '2st' ? (koef = 0.55) : '';
 
 	let G1m = +(koef * q * 1000 / (t1 - txvZ)).toFixed(3); //*
 	let Qgvscirkz = +(ktp * qs / (1 + ktp)).toFixed(6);
@@ -147,7 +139,8 @@ export function gidr(Gm, Gv, t, p, du_im, du_tr, tipL, filtr, ok, tipIM, PL) {
 	}
 	let a1 = Math.pow(du_im * 0.001, 2) / 4;
 	let V = (Gv * 1 / (3.14 * a1) / 3600).toFixed(2) || '';
-	du_im == 0 || !du_im ? V = '' : ''
+	du_im == 0 || !du_im || Gv == 0 ? V = '' : ''
+
 	let n = 17.8 / (1 + 0.0337 * t + 0.000221 * Math.pow(t, 2));
 	let re = du_im * V / (n * 0.0001);
 	let I = 0.11 * Math.pow(68 / re + sherh / du_im, 0.25);

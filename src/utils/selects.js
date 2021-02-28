@@ -56,5 +56,9 @@ const opt = {
         { text: "зависимая", value: 0 },
         { text: "независимая (с подпиткой)", value: 1 },
     ],
+    fuco: [
+        { text: "закрытая (М1 = М2)", value: 0 },
+        { text: "открытая (М1 - М2)", value: 1 },
+    ],
 }
 export default opt;

@@ -6,9 +6,14 @@ module.exports = {
     extend: {
       fontSize: {
         'xss': '.55rem',
-      }
+      },
     },
   },
-  variants: {},
+  variants: {
+    extend: {
+      opacity: ['disabled'],
+      backgroundColor: ['disabled'],
+    }
+  },
   plugins: [],
 }

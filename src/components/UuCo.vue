@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div class="w-full text-center text-red-800 font-bold">
+    <div class="w-full text-center text-blue-800 font-bold">
       <input
         class="w-full outline-none border-none"
-        v-model="project.data_ot.name"
+        v-model="project.ot.data.name"
         type="text"
       />
     </div>
@@ -12,7 +12,7 @@
         <label>Q, Гкал/ч</label>
         <input
           class="w-full"
-          v-model.number="project.isx_ot.q"
+          v-model.number="project.ot.isx.q"
           type="number"
           step="0.0000001"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -22,10 +22,10 @@
     </div>
     <div class="flex justify-between mt-3">
       <div class="w-2/3">
-        <label>ГВС</label>
-        <select class="w-full">
+        <label>формула учета</label>
+        <select v-model="project.ot.isx.fuCo" class="w-full">
           <option
-            v-for="item in opt.sx_ts"
+            v-for="item in opt.fuco"
             :value="item.value"
             :key="item.index"
           >
@@ -53,7 +53,7 @@
       <div class="w-3/12 px-1">
         <input
           class="w-full"
-          v-model.number="project.isx_ot.t1"
+          v-model.number="project.ot.isx.t1"
           type="number"
           step="0.1"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -63,7 +63,7 @@
       <div class="w-3/12">
         <input
           class="w-full"
-          v-model.number="project.isx_ot.t2"
+          v-model.number="project.ot.isx.t2"
           type="number"
           step="0.1"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -79,7 +79,7 @@
       <div class="w-3/12 px-1">
         <input
           class="w-full"
-          v-model.number="project.isx_ot.t11"
+          v-model.number="project.ot.isx.t11"
           type="number"
           step="0.1"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -89,7 +89,7 @@
       <div class="w-3/12">
         <input
           class="w-full"
-          v-model.number="project.isx_ot.t21"
+          v-model.number="project.ot.isx.t21"
           type="number"
           step="0.1"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -105,7 +105,7 @@
       <div class="w-3/12 px-1">
         <input
           class="w-full"
-          v-model.number="project.isx_ot.p1"
+          v-model.number="project.ot.isx.p1"
           type="number"
           step="0.1"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -115,7 +115,7 @@
       <div class="w-3/12">
         <input
           class="w-full"
-          v-model.number="project.isx_ot.p2"
+          v-model.number="project.ot.isx.p2"
           type="number"
           step="0.1"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -131,7 +131,7 @@
       <div class="w-3/12 px-1">
         <input
           class="w-full"
-          v-model.number="project.rash.rashod_ot.G1v"
+          v-model.number="project.rash.ot.G1v"
           type="number"
           step="0.01"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -142,7 +142,7 @@
       <div class="w-3/12">
         <input
           class="w-full"
-          v-model.number="project.rash.rashod_ot.G2v"
+          v-model.number="project.rash.ot.G2v"
           type="number"
           step="0.01"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -157,7 +157,7 @@
         <span class="text-xs text-gray-500">Ду ИМ</span>
       </div>
       <div class="w-1/2 pl-1">
-        <select v-model.number="project.uu_ot.di1" class="w-full">
+        <select v-model.number="project.ot.uu.di1" class="w-full">
           <option
             v-for="item in opt.du_im"
             :value="item.value"
@@ -199,7 +199,7 @@
       </div>
       <div class="w-1/2 pl-1">
         <select
-          v-model.number="project.uu_ot.tipIm1"
+          v-model.number="project.ot.uu.tipIm1"
           class="w-full"
           :class="no6.a ? 'bg-red-500 text-white focus:bg-red-600' : 'bg-white'"
         >
@@ -220,7 +220,7 @@
         <span class="text-xs text-gray-500">Ду тр-в</span>
       </div>
       <div class="w-1/4 px-1">
-        <select v-model.number="project.uu_ot.dut1" class="w-full">
+        <select v-model.number="project.ot.uu.dut1" class="w-full">
           <option
             v-for="item in diap_tr1"
             :value="item.value"
@@ -231,7 +231,7 @@
         </select>
       </div>
       <div class="w-1/4">
-        <select v-model.number="project.uu_ot.dut2" class="w-full">
+        <select v-model.number="project.ot.uu.dut2" class="w-full">
           <option
             v-for="item in diap_tr2"
             :value="item.value"
@@ -250,7 +250,7 @@
       <div class="w-1/4 px-1">
         <input
           class="w-full"
-          v-model.number="project.uu_ot.otmetka_T1"
+          v-model.number="project.ot.uu.otmetka_T1"
           type="number"
           step="0.001"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -260,7 +260,7 @@
       <div class="w-3/12">
         <input
           class="w-full"
-          v-model.number="project.uu_ot.otmetka_T2"
+          v-model.number="project.ot.uu.otmetka_T2"
           type="number"
           step="0.001"
           oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -273,7 +273,7 @@
       <div class="w-1/2 pr-1">
         <label>Тип линии</label>
         <select
-          v-model.number="project.uu_ot.tipL"
+          v-model.number="project.ot.uu.tipL"
           class="w-full"
           :class="
             modif.a ? 'bg-red-500 text-white focus:bg-red-600' : 'bg-white'
@@ -291,7 +291,7 @@
       <div class="w-1/2">
         <label>Фильтр</label>
         <select
-          v-model.number="project.uu_ot.filter"
+          v-model.number="project.ot.uu.filter"
           :disabled="no_filter"
           class="w-full"
         >
@@ -312,7 +312,7 @@
         <span class="text-xs text-gray-500">Схема с/о</span>
       </div>
       <div class="w-2/3">
-        <select v-model.number="project.isx_ot.sx_ot" class="w-full">
+        <select v-model.number="project.ot.isx.sx_ot" class="w-full">
           <option
             v-for="item in opt.podp"
             :value="item.value"
@@ -325,12 +325,12 @@
     </div>
     <div
       class="flex-wrap"
-      :class="project.isx_ot.sx_ot > 0 ? 'flex' : 'hidden'"
+      :class="project.ot.isx.sx_ot > 0 ? 'flex' : 'hidden'"
     >
       <div class="flex w-full justify-between mt-4">
         <div class="w-2/3 pr-1">
           <label>Фильтр Т94</label>
-          <select v-model.number="project.uu_ot.filter_p" class="w-full">
+          <select v-model.number="project.ot.uu.filter_p" class="w-full">
             <option
               v-for="item in opt.tip_filtr"
               :value="item.value"
@@ -345,7 +345,7 @@
           <label>Отметка</label>
           <input
             class="w-full"
-            v-model.number="project.uu_ot.otmetka_T9"
+            v-model.number="project.ot.uu.otmetka_T9"
             type="number"
             step="0.001"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -358,7 +358,7 @@
           <label>Расход</label>
           <input
             class="w-full"
-            v-model.number="project.rash.rashod_ot.G9v"
+            v-model.number="project.rash.ot.G9v"
             type="number"
             step="0.01"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
@@ -367,7 +367,7 @@
         </div>
         <div class="w-1/4 pr-1">
           <label>Ду ИМ</label>
-          <select v-model.number="project.uu_ot.di9" class="w-full">
+          <select v-model.number="project.ot.uu.di9" class="w-full">
             <option
               v-for="item in opt.du_im"
               :value="item.value"
@@ -389,7 +389,7 @@
         </div>
         <div class="w-1/4">
           <label>Ду Т94</label>
-          <select v-model.number="project.uu_ot.dut9" class="w-full">
+          <select v-model.number="project.ot.uu.dut9" class="w-full">
             <option
               v-for="item in diap_tr9"
               :value="item.value"
@@ -417,84 +417,101 @@ export default {
   },
   setup(props) {
     const project = ref(props.project);
-    const du1 = ref(podbor(project.value.rash.rashod_ot.G1v));
-    const du9 = ref(podbor(project.value.rash.rashod_ot.G9v));
-    const diap_tr1 = ref(diap_tr(project.value.uu_ot.di1));
-    const diap_tr2 = ref(diap_tr(project.value.uu_ot.di2));
-    const diap_tr9 = ref(diap_tr(project.value.uu_ot.di9));
+    const du1 = ref(podbor(project.value.rash.ot.G1v));
+    const du9 = ref(podbor(project.value.rash.ot.G9v));
+    const diap_tr1 = ref(diap_tr(project.value.ot.uu.di1));
+    const diap_tr2 = ref(diap_tr(project.value.ot.uu.di2));
+    const diap_tr9 = ref(diap_tr(project.value.ot.uu.di9));
 
     const Lim1 = ref(speed(project.value.gidr.gdr1.V));
     const Lim2 = ref(speed(project.value.gidr.gdr2.V));
     const Lim9 = ref(speed(project.value.gidr.gdr9.V));
-    const modif = ref(no_mod(project.value.uu_ot.di1));
-    const no6 = ref(no_i6(project.value.uu_ot.di1));
+    const modif = ref(no_mod(project.value.ot.uu.di1));
+    const no6 = ref(no_i6(project.value.ot.uu.di1));
     const no_filter = ref(false);
-
-    watch(project.value.isx_ot, () => {
-      if (project.value.isx_ot.q > 0) {
-        project.value.isx_ot.q > 100
-          ? (project.value.isx_ot.q = project.value.isx_ot.q / 1000)
+    // q
+    watch(
+      () => project.value.ot.isx.q,
+      () => {
+        if (project.value.ot.isx.q > 0) {
+          project.value.ot.isx.q > 100
+            ? (project.value.ot.isx.q = project.value.ot.isx.q / 1000)
+            : "";
+        }
+      }
+    );
+    // ot
+    watch(
+      () => project.value.rash.ot,
+      () => {
+        project.value.rash.ot.G1v > 0
+          ? ((du1.value = podbor(project.value.rash.ot.G1v)),
+            (project.value.ot.uu.di1 = du1.value.d),
+            (du9.value = podbor(project.value.rash.ot.G9v)),
+            (project.value.ot.uu.di9 = du9.value.d),
+            (Lim1.value = speed(project.value.gidr.gdr1.V)),
+            (Lim2.value = speed(project.value.gidr.gdr2.V)))
           : "";
       }
-      du1.value = podbor(project.value.rash.rashod_ot.G1v);
-      project.value.uu_ot.di1 = du1.value.d;
-      du9.value = podbor(project.value.rash.rashod_ot.G9v);
-      project.value.uu_ot.di9 = du9.value.d;
-    });
-    watch(project.value.uu_ot, () => {
-      project.value.uu_ot.tipL == "ml"
-        ? ((modif.value = no_mod(project.value.uu_ot.di1)),
-          (project.value.uu_ot.filter = 0),
+    );
+    // ot.uu
+    watch(project.value.ot.uu, () => {
+      project.value.ot.uu.tipL == "ml"
+        ? ((modif.value = no_mod(project.value.ot.uu.di1)),
+          (project.value.ot.uu.filter = 0),
           (no_filter.value = true))
         : ((modif.value = false), (no_filter.value = false));
 
-      project.value.uu_ot.tipIm1 == 6
-        ? (no6.value = no_i6(project.value.uu_ot.di1))
+      project.value.ot.uu.tipIm1 == 6
+        ? (no6.value = no_i6(project.value.ot.uu.di1))
         : (no6.value = false);
     });
+    // di1
     watch(
-      () => project.value.uu_ot.di1,
+      () => project.value.ot.uu.di1,
       () => {
-        project.value.uu_ot.di1 == 0
-          ? ((project.value.uu_ot.dut1 = 0), (project.value.uu_ot.dut2 = 0))
+        project.value.ot.uu.di1 == 0
+          ? ((project.value.ot.uu.dut1 = 0), (project.value.ot.uu.dut2 = 0))
           : "";
-        project.value.uu_ot.di2 = project.value.uu_ot.di1;
-        diap_tr1.value = diap_tr(project.value.uu_ot.di1);
+        project.value.ot.uu.di2 = project.value.ot.uu.di1;
+        diap_tr1.value = diap_tr(project.value.ot.uu.di1);
         diap_tr2.value = diap_tr1.value;
-        if (project.value.uu_ot.di1 > 0) {
-          diap_tr1.value.find((x) => x.value === project.value.uu_ot.dut1)
+        if (project.value.ot.uu.di1 > 0) {
+          diap_tr1.value.find((x) => x.value === project.value.ot.uu.dut1)
             ? ""
-            : (project.value.uu_ot.dut1 = diap_tr1.value[1].value);
+            : (project.value.ot.uu.dut1 = diap_tr1.value[1].value);
         }
-        if (project.value.uu_ot.di2 > 0) {
-          diap_tr2.value.find((x) => x.value === project.value.uu_ot.dut2)
+        if (project.value.ot.uu.di2 > 0) {
+          diap_tr2.value.find((x) => x.value === project.value.ot.uu.dut2)
             ? ""
-            : (project.value.uu_ot.dut2 = diap_tr2.value[1].value);
+            : (project.value.ot.uu.dut2 = diap_tr2.value[1].value);
         }
 
         Lim1.value = speed(project.value.gidr.gdr1.V);
         Lim2.value = speed(project.value.gidr.gdr2.V);
       }
     );
+    // di9
     watch(
-      () => project.value.uu_ot.di9,
+      () => project.value.ot.uu.di9,
       () => {
-        project.value.uu_ot.di1 == 0 ? (project.value.uu_ot.dut9 = 0) : "";
+        project.value.ot.uu.di1 == 0 ? (project.value.ot.uu.dut9 = 0) : "";
 
-        diap_tr9.value = diap_tr(project.value.uu_ot.di9);
+        diap_tr9.value = diap_tr(project.value.ot.uu.di9);
         9;
-        if (project.value.uu_ot.di9 > 0) {
-          diap_tr9.value.find((x) => x.value === project.value.uu_ot.dut9)
+        if (project.value.ot.uu.di9 > 0) {
+          diap_tr9.value.find((x) => x.value === project.value.ot.uu.dut9)
             ? ""
-            : (project.value.uu_ot.dut9 = diap_tr9.value[1].value);
+            : (project.value.ot.uu.dut9 = diap_tr9.value[1].value);
         }
         Lim9.value = speed(project.value.gidr.gdr9.V);
       }
     );
+    // dut1
     watch(
-      () => project.value.uu_ot.dut1,
+      () => project.value.ot.uu.dut1,
       () => {
-        project.value.uu_ot.dut2 = project.value.uu_ot.dut1;
+        project.value.ot.uu.dut2 = project.value.ot.uu.dut1;
       }
     );
 

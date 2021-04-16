@@ -36,6 +36,8 @@ const opt = {
     sx_ts: [
         { text: "закрытая", value: "close" },
         { text: "Открытая", value: "open" },
+        { text: "Открытая без ИМ цирк.", value: "open_notim_cirk" },
+        { text: "Открытая без ИМ тупик.", value: "open_notim_tup" },
         { text: "1 ступ теплообмен", value: "1st" },
         { text: "2 ступ теплообмен", value: "2st" },
     ],
@@ -60,5 +62,30 @@ const opt = {
         { text: "закрытая (М1 = М2)", value: 0 },
         { text: "открытая (М1 - М2)", value: 1 },
     ],
+    items_sb: [
+        { text: "СБ-04 с блоком бесперебойного питания", value: 0 },
+        { text: "СБ-04 с сетевым питанием", value: 1 },
+      ],
+    items_pltr: [
+        { label: "GSM-модем", value: "gsm" },
+        { label: "USBA", value: "usba" },
+        { label: "Ethernet ПРС-802", value: "prs802" },
+        { label: "RS485E", value: "rs485" },
+        { label: "УППР", value: "uppr" },
+        { label: "УПП", value: "lpt" },
+        { label: "ДТА", value: "dta" },
+        { label: "ПР", value: "prReg" },
+        { label: "ДЗ", value: "dz" },
+        { label: "БП ПР", value: "bp_pr" },
+        { label: "ИМ021", value: "m021" },
+      ],
+      teploiz: [
+        { text: "Energoflex 13mm", value: 'enflex13' },
+        { text: "Energoflex 19mm", value: 'enflex19' },
+        { text: "K-flex 13mm", value: 'flex13' },
+        { text: "K-flex 19mm", value: 'flex19' },
+        { text: "Цилиндры каш. 40мм", value: 'cilcash40' },
+      ],
+
 }
 export default opt;

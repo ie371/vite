@@ -8,13 +8,13 @@ export function no_i6(du) {
 	let a = false;
 	(du > 80 || du < 25) ? (a = true) : (a = false);
 	(du == 0 || !du) ? (a = false) : '';
-	return { a };
+	return  a ;
 };
 export function no_mod(du) {
 	let a = false;
 	(du > 80 || du < 32) ? (a = true) : (a = false);
 	(du == 0 || !du) ? (a = false) : '';
-	return { a };
+	return  a ;
 };
 
 export function diapT4(du) {
@@ -24,5 +24,10 @@ export function diapT4(du) {
 	let diap = opt.du_im.slice(0, pos + 1);
 	return { diap };
 };
+// export function no_pr(arr) {
+// 	let a 
+// 	arr.indexOf(true)>=0 ? a = true : a = false;
+// 	return  a ;
+// };
 
 

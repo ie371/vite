@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0ddd23b6-010c-4339-b092-43e3740ec46c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UuAtm.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UuCo.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UuDetail.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UuGvs.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/UuList.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/collapce.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/modal.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/rekv.vue" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/isx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/rekv.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/rekv.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/FuncUu.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/FuncUu.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/checks.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/checks.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/clasess.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/selects.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/selects.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/toggle.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/toggle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Home.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Home.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/UUTS.vue" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/UUTS.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tailwind.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/tailwind.config.js" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1r64jLnkEUW2aqER28mevgDRjcH" />
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ddd23b6-010c-4339-b092-43e3740ec46c" name="Default Changelist" comment="" />
+      <created>1618283339991</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1618283339991</updated>
+      <workItem from="1618283341173" duration="2000" />
+    </task>
+    <servers />
+  </component>
+</project>

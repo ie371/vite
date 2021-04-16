@@ -1,12 +1,11 @@
 <template>
   <header
-    class="sticky top-0 w-screen bg-gray-600 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
+    class="sticky top-0 w-screen bg-gray-100 z-20 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
   >
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div>
-        <!-- <img class="h-8" src="./assets/logo.svg" alt="Intelpribor" /> -->
         <button
-          class="text-gray-500 hover:text-white focus:text-white focus:outline-none"
+          class="text-gray-500 hover:text-white focus:text-white focus:outline-none hover:bg-gray-500 rounded-sm"
           aria-label="Open Menu"
           @click="toggle"
         >
@@ -27,7 +26,7 @@
         <button
           @click="isOpen = !isOpen"
           type="button"
-          class="block text-gray-500 hover:text-white focus:text-white focus:outline-none"
+          class="block text-gray-500 focus:outline-none"
         >
           <svg
             fill="none"
@@ -44,58 +43,78 @@
         </button>
       </div>
     </div>
+
     <nav
       :class="isOpen ? 'block' : 'hidden'"
-      class="px-2 pt-2 pb-4 sm:flex sm:p-0"
+      class="px-2 pt-2 pb-2 sm:flex sm:p-0"
       @click="isOpen = !isOpen"
     >
       <router-link
         to="/"
-        class="block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800"
-        >Home</router-link
-      >
-
-      <router-link
-        to="/uu"
-        class="block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800"
-        >УУ</router-link
-      >
-
-      <router-link
-        to="/about"
-        class="block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800"
-        >About</router-link
+        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        >ТС</router-link
       >
       <router-link
-        to="/about"
-        class="block px-2 py-1 text-white font-semibold rounded hover:bg-gray-800"
-        >Выход</router-link
+        to="/uuhvs"
+        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        >ХВС</router-link
+      >
+      <router-link
+        to="/itp"
+        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        >ИТП</router-link
       >
     </nav>
-  </header>
-  <div class="overflow-hidden">
-    <Rekv :visible="visible" @close_rekv="toggle" />
-  </div>
 
-  <div class="w-screen mx-auto px-2 py-2 mt-2"><router-view /></div>
+    <nav
+      :class="isOpen ? 'block' : 'hidden'"
+      class="px-2 pt-1 pb-4 sm:flex sm:p-0"
+      @click="isOpen = !isOpen"
+    >
+      <button
+        @click.prevent="signout"
+        type="button"
+        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+      >
+        Выход
+      </button>
+
+      <!-- <router-link
+        to="/about"
+        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        >Выход</router-link
+      > -->
+    </nav>
+  </header>
+  <form id="formTS" method="post" target="_blank" enctype="multipart/form-data">
+    <div class="overflow-hidden">
+      <SideLeft :visible="visible" @close_rekv="toggle" />
+    </div>
+
+    <div class="w-screen mx-auto px-2 py-2 mt-2"><router-view /></div>
+  </form>
 </template>
 
 <script>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { useToggle } from "./utils/toggle";
-import Rekv from "./components/rekv.vue";
+import SideLeft from "./components/rekv/sideLeft.vue";
+
 export default {
   components: {
-    Rekv,
+    SideLeft,
   },
   setup() {
     const isOpen = ref(false);
-    // const visible = ref(false);
+
+    const signout = () => {
+      window.location = "app.php?exit=1";
+    };
 
     return {
       isOpen,
       ...useToggle(),
-      // visible,
+      signout,
     };
   },
 };

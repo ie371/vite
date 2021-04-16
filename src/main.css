@@ -2,42 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    input, select {
-        @apply 
-        text-sm
+  /* @font-face {
+    font-family: "Roboto";
+    src: url("./assets/fonts/Roboto-Regular.ttf");
+  } */
+
+  input,
+  select {
+    @apply text-sm
         px-1
+        py-0.5
         font-bold
         block
         focus:outline-none
         focus:ring-2
-        focus:bg-blue-200
+        focus:bg-blue-50
         border
         border-gray-300
         rounded-sm
         placeholder-gray-300;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    input[type="number"] {
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type="number"] {
     -moz-appearance: textfield;
-    }
-    label {
-      @apply block 
+  }
+
+  label {
+    @apply block 
       text-xss
-      font-medium
       pl-2
       leading-4
-      text-red-600;
-    }
-    h3 {
-      @apply text-lg;
-    }
-    a {
-      @apply text-blue-600 underline;
-    }
+      truncate
+       text-gray-500;
   }
+  h3 {
+    @apply text-lg;
+  }
+  a {
+    @apply text-blue-600;
+  }
+}

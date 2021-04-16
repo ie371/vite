@@ -1,15 +1,17 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 import Rekv from "./rekv";
-import Isx from "./isx";
+import UuTs from "./uuts";
+import UuHvs from "./uuhvs";
+import ITP from "./itp";
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
+  state: {},
+  mutations: {},
+  actions: {},
   modules: {
-    Rekv, Isx
-  }
-})
+    Rekv,
+    UuTs,
+    UuHvs,
+    ITP,
+  },
+});

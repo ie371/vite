@@ -1,642 +1,659 @@
 <template>
   <div>
-    <div class="w-full text-center text-blue-600">
-      <input
-        class="w-full border-t-0 border-l-0 border-r-0"
-        v-model="project.ot.data.name"
-        type="text"
-      />
+    <div class="p-1 m-3">
+      <button
+        type="button"
+        @click="openPDF()"
+        class="
+          w-full
+          h-10
+          text-base
+          hover:scale-110
+          focus:outline-none
+          flex
+          justify-center
+          px-4
+          py-2
+          rounded
+          font-bold
+          cursor-pointer
+          hover:bg-blue-700
+          hover:text-blue-100
+          bg-blue-200
+          text-blue-700
+          duration-200
+          ease-in-out
+          transition
+          disabled:opacity-50
+        "
+      >
+        PDF
+      </button>
     </div>
-    <div class="flex justify-between mt-3">
-      <div class="w-1/3">
-        <label>Qco, Гкал/ч</label>
+
+    <div class="flex pb-2 justify-between items-end">
+      <div class="w-1/6 pl-1">
+        <label>t1, C</label>
         <input
           class="w-full appearance-none"
-          v-model.number="project.ot.isx.qco"
+          v-model.number="project.isx.t1"
           type="number"
-          step="0.0000001"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="8"
         />
       </div>
-      <div class="w-1/3 px-1">
-        <label>Qvent, Гкал/ч</label>
+      <div class="w-1/6 pl-1">
+        <label>t2, C</label>
         <input
-          class="w-full"
-          v-model.number="project.ot.isx.qvent"
+          class="w-full appearance-none"
+          v-model.number="project.isx.t2"
           type="number"
-          step="0.0000001"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="8"
         />
       </div>
-      <div class="w-1/3">
-        <label>Qsum, Гкал/ч</label>
+      <div class="w-1/6 pl-1">
+        <label>t1лето, C</label>
         <input
-          class="w-full text-white bg-gray-400"
-          v-model.number="project.ot.isx.q"
+          class="w-full appearance-none"
+          v-model.number="project.isx.t1_l"
           type="number"
-          disabled
         />
       </div>
-    </div>
-    <div class="flex justify-start mt-3">
-      <div class="w-1/2">
-        <label>формула учета</label>
-        <select
-          v-model="project.ot.isx.fuCo"
-          class="w-full"
-          :disabled="no_fuco"
-          :class="no_fuco ? 'text-white bg-gray-500' : 'bg-white'"
-        >
-          <option
-            v-for="item in opt.fuco"
-            :value="item.value"
-            :key="item.index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-      <div class="w-1/4 px-1">
-        <label>Т до срезки</label>
+      <div class="w-1/6 pl-1">
+        <label>t2лето, C</label>
         <input
-          class="w-full"
-          v-model.number="project.ot.isx.t_srez"
+          class="w-full appearance-none"
+          v-model.number="project.isx.t2_l"
           type="number"
-          step="1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="3"
         />
       </div>
-      <div class="w-1/4 pl-1 text-center">
-        <label class="pl-0">реверс на Т2</label>
+      <div class="w-1/6 pl-1">
+        <label>p1, мвст</label>
         <input
-          type="checkbox"
-          v-model.number="project.ot.isx.revers"
-          class="h-6 w-6 m-auto"
+          class="w-full appearance-none"
+          v-model.number="project.isx.p1"
+          type="number"
+        />
+      </div>
+      <div class="w-1/6 pl-1">
+        <label>p2, мвст</label>
+        <input
+          class="w-full appearance-none"
+          v-model.number="project.isx.p2"
+          type="number"
         />
       </div>
     </div>
 
-    <!-- Колонки -->
-    <div class="flex justify-between mt-2 px-3">
-      <div class="w-1/2"></div>
-      <div class="w-3/12 pl-1 flex justify-center">
-        <span class="text-sm text-red-500 font-bold">T1</span>
-      </div>
-      <div class="w-3/12 flex justify-center">
-        <span class="text-sm text-blue-500 font-bold">T2</span>
-      </div>
+    <div class="w-full text-left text-blue-600 font-bold px-2 mt-2">
+      <span>Климатология</span>
     </div>
-    <!-- температура ТС-->
-    <div class="flex w-full justify-between mt-1 items-center">
-      <div class="w-6/12 text-gray-500 text-right">темп.гр. т/с</div>
-      <div class="w-3/12 px-1">
-        <input
-          class="w-full"
-          v-model.number="project.ot.isx.t1"
-          type="number"
-          step="0.1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-      <div class="w-3/12">
-        <input
-          class="w-full"
-          v-model.number="project.ot.isx.t2"
-          type="number"
-          step="0.1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-    </div>
-    <!-- температура СО-->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-6/12 text-gray-500 text-right">темп.гр. с/о</div>
-      <div class="w-3/12 px-1">
-        <input
-          class="w-full"
-          v-model.number="project.ot.isx.t11"
-          type="number"
-          step="0.1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-      <div class="w-3/12">
-        <input
-          class="w-full"
-          v-model.number="project.ot.isx.t21"
-          type="number"
-          step="0.1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-    </div>
-    <!-- Давление-->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-6/12 text-gray-500 text-right">давление, мвст</div>
-      <div class="w-3/12 px-1">
-        <input
-          class="w-full"
-          v-model.number="project.ot.isx.p1"
-          type="number"
-          step="0.1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-      <div class="w-3/12">
-        <input
-          class="w-full"
-          v-model.number="project.ot.isx.p2"
-          type="number"
-          step="0.1"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-    </div>
-    <!-- Расход -->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-6/12 text-gray-500 text-right">Расход, м³/ч</div>
-      <div class="w-3/12 px-1">
-        <input
-          class="w-full"
-          v-model.number="project.rash.ot.G1v"
-          type="number"
-          step="0.01"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="6"
-          readonly
-        />
-      </div>
-      <div class="w-3/12">
-        <input
-          class="w-full"
-          v-model.number="project.rash.ot.G2v"
-          type="number"
-          step="0.01"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="6"
-          readonly
-        />
-      </div>
-    </div>
-    <!-- Ду ИМ -->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-1/2 text-gray-500 text-right">Ду ИМ</div>
-      <div class="w-1/2 pl-1">
-        <select v-model.number="project.ot.uu.di1" class="w-full">
-          <option
-            v-for="item in opt.du_im"
-            :value="item.value"
-            :key="item.index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <!-- Скорость -->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-6/12 text-gray-500 text-right">Скорость, м/с</div>
-      <div class="w-1/4 px-1">
-        <input
-          v-model="project.gidr.gdr1.V"
-          class="w-full"
-          :class="Lim1.lim ? 'text-red-600' : ''"
-          type="text"
-          disabled
-        />
-      </div>
-      <div class="w-1/4">
-        <input
-          v-model="project.gidr.gdr2.V"
-          class="w-full"
-          :class="Lim2.lim ? 'text-red-600' : ''"
-          type="text"
-          disabled
-        />
-      </div>
-    </div>
-    <!-- тип ИМ -->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-1/2 text-gray-500 text-right">тип ИМ</div>
-      <div class="w-1/2 pl-1">
-        <select
-          v-model.number="project.ot.uu.tipIm1"
-          class="w-full"
-          :class="no6 ? 'bg-red-500 text-white focus:bg-red-600' : 'bg-white'"
-        >
-          <option
-            v-for="item in opt.tip_im"
-            :value="item.value"
-            :key="item.index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-      <div></div>
-    </div>
-    <!-- Ду трубопроводов -->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-1/2 text-gray-500 text-right">Ду тр-в</div>
-      <div class="w-1/4 px-1">
-        <select v-model.number="project.ot.uu.dut1" class="w-full">
-          <option
-            v-for="item in diap_tr1"
-            :value="item.value"
-            :key="item.index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-      <div class="w-1/4">
-        <select v-model.number="project.ot.uu.dut2" class="w-full">
-          <option
-            v-for="item in diap_tr2"
-            :value="item.value"
-            :key="item.index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <!-- Отметки -->
-    <div class="flex w-full justify-between mt-2 items-center">
-      <div class="w-1/2 text-gray-500 text-right">Отметки, мм</div>
-      <div class="w-1/4 px-1">
-        <input
-          class="w-full"
-          v-model.number="project.ot.uu.otmetka_T1"
-          type="number"
-          step="0.001"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-      <div class="w-3/12">
-        <input
-          class="w-full"
-          v-model.number="project.ot.uu.otmetka_T2"
-          type="number"
-          step="0.001"
-          oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-          maxlength="5"
-        />
-      </div>
-    </div>
-    <!-- ТИП ЛИНИИ-->
-    <div class="flex w-full justify-between border-t border-gray-400 pt-2 mt-4">
-      <div class="w-1/2 pr-1">
-        <label>Тип линии</label>
-        <select
-          v-model.number="project.ot.uu.tipL"
-          class="w-full"
-          :class="modif ? 'bg-red-600 text-white focus:bg-red-600' : 'bg-white'"
-        >
-          <option
-            v-for="item in opt.tip_lin"
-            :value="item.value"
-            :key="item.index"
-          >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
+    <div class="flex w-full justify-start items-end px-2">
       <div class="w-1/2">
-        <label>Фильтр</label>
-        <select
-          v-model.number="project.ot.uu.filter"
-          :disabled="no_filter"
-          class="w-full"
-          :class="
-            (no_filter ? ' text-white bg-gray-500' : '',
-            nogrz
-              ? 'bg-red-600 text-white focus:bg-red-600'
-              : no_filter
-              ? ' text-white bg-gray-500'
-              : '')
-          "
-        >
-          <option
-            v-for="item in opt.tip_filtr"
-            :value="item.value"
-            :key="item.index"
-          >
+        <label>Республика, край, область:</label>
+        <select v-model="project.data.region" class="w-full" @change="nasp">
+          <option v-for="item in Regions" :value="item.value" :key="item.index">
             {{ item.text }}
+          </option>
+        </select>
+      </div>
+      <div class="w-1/2 px-1">
+        <label>Населенный пункт:</label>
+        <select
+          v-model="project.data.naspunkt"
+          class="w-full"
+          :disabled="project.data.region == 0"
+        >
+          <option v-for="item in nas_pu" :value="item" :key="item.index">
+            {{ item }}
           </option>
         </select>
       </div>
     </div>
 
-    <!-- ПОДПИТКА-->
-    <div class="flex w-full justify-between items-center mt-4">
-      <div class="w-1/3 text-gray-500 text-right pr-1">Схема с/о</div>
-      <div class="w-2/3">
-        <select v-model.number="project.ot.isx.sx_ot" class="w-full">
-          <option
-            v-for="item in opt.podp"
-            :value="item.value"
-            :key="item.index"
+    <div class="border border-gray-300 rounded-md p-2 pt-0 mb-2 mt-3">
+      <!-- -------Отопление------------ -->
+      <div class="flex w-full justify-start items-end mt-1">
+        <div class="w-1/6 pl-2">
+          <button
+            type="button"
+            @click="add('o')"
+            class="
+              focus:outline-none
+              hover:text-blue-600
+              text-green-500 text-2xl
+              font-semibold
+              pt-0
+            "
           >
-            {{ item.text }}
-          </option>
-        </select>
-      </div>
-    </div>
-    <transition name="bounce">
-      <div class="flex-wrap" v-show="project.ot.isx.sx_ot > 0">
-        <div class="flex w-full justify-between mt-4">
-          <div class="w-2/3 pr-1">
-            <label>Фильтр Т94</label>
-            <select
-              v-model.number="project.ot.uu.filter_p"
-              class="w-full"
-              :class="nogrz9 ? 'bg-red-600 text-white focus:bg-red-600' : ''"
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              <option
-                v-for="item in opt.tip_filtr"
-                :value="item.value"
-                :key="item.index"
-              >
-                {{ item.text }}
-              </option>
-            </select>
-          </div>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="w-1/4 text-pink-700 font-bold pb-1">
+          <input
+            class="w-full appearance-none border-0"
+            v-model="project.ot.data.name_sys"
+            type="text"
+          />
+        </div>
 
-          <div class="w-1/3">
-            <label>Отметка</label>
+        <div class="w-1/6 text-left pb-1 pl-1">
+          <label>t11, C</label>
+          <input
+            class="w-full appearance-none"
+            v-model.number="project.isx.t11"
+            type="number"
+          />
+        </div>
+        <div class="w-1/6 pl-1 text-left pb-1">
+          <label>t21, C</label>
+          <input
+            class="w-full appearance-none"
+            v-model.number="project.isx.t21"
+            type="number"
+          />
+        </div>
+        <div class="w-1/4 text-left pb-1 pl-1"></div>
+      </div>
+
+      <div class="flex w-full items-end" v-for="(item, i) in project.ot_arr">
+        <div class="flex 11/12 justify-between">
+          <div class="w-1/5">
+            <label>Q, Гкал/ч</label>
             <input
-              class="w-full"
-              v-model.number="project.ot.uu.otmetka_T9"
+              class="w-full appearance-none"
+              v-model.number="item.q"
               type="number"
-              step="0.001"
+              step="0.0000001"
               oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-              maxlength="5"
+              maxlength="8"
             />
+          </div>
+          <div class="w-4/5 pl-1 pb-1">
+            <label>название</label>
+            <input class="w-full" v-model="item.name" type="text" />
           </div>
         </div>
-        <div class="flex w-full justify-between mt-4">
-          <div class="w-1/4 pr-1">
-            <label>Расход</label>
-            <input
-              class="w-full"
-              v-model.number="project.rash.ot.G9v"
-              type="number"
-              step="0.01"
-              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-              maxlength="6"
-            />
+        <div class="w-1/12 text-left pl-1 text-red-500">
+          <button
+            type="button"
+            @click="remove('o', item.id)"
+            class="focus:outline-none hover:text-blue-600"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- -------Вентиляция------------ -->
+      <div class="flex w-full justify-start items-end pt-3">
+        <div class="w-1/6 pl-2">
+          <button
+            type="button"
+            @click="add('v')"
+            class="
+              focus:outline-none
+              hover:text-blue-600
+              text-green-500 text-2xl
+              font-semibold
+              pt-0
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="w-1/2 text-pink-700 font-bold pb-1">
+          <input
+            class="w-full appearance-none border-0"
+            v-model="project.vent.data.name_sys"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="pb-1 border-gray-300">
+        <div
+          class="flex w-full items-end"
+          v-for="(item, i) in project.vent_arr"
+        >
+          <div class="flex 11/12 justify-between">
+            <div class="w-1/5">
+              <label>Q, Гкал/ч</label>
+              <input
+                class="w-full appearance-none"
+                v-model.number="item.q"
+                type="number"
+                step="0.0000001"
+                oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+                maxlength="8"
+              />
+            </div>
+            <div class="w-4/5 pl-1 pb-1">
+              <label>название</label>
+              <input class="w-full" v-model="item.name" type="text" />
+            </div>
           </div>
-          <div class="w-1/4 pr-1">
-            <label>Ду ИМ</label>
-            <select v-model.number="project.ot.uu.di9" class="w-full">
-              <option
-                v-for="item in opt.du_im"
-                :value="item.value"
-                :key="item.index"
+          <div class="w-1/12 text-left pl-1 text-red-500">
+            <button
+              type="button"
+              @click="remove('v', item.id)"
+              class="focus:outline-none hover:text-blue-600"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                {{ item.text }}
-              </option>
-            </select>
-          </div>
-          <div class="w-1/4 pr-1">
-            <label>Скорость</label>
-            <input
-              v-model="project.gidr.gdr9.V"
-              class="w-full"
-              :class="Lim9.lim ? ' text-red-600' : ''"
-              type="text"
-              disabled
-            />
-          </div>
-          <div class="w-1/4">
-            <label>Ду Т94</label>
-            <select v-model.number="project.ot.uu.dut9" class="w-full">
-              <option
-                v-for="item in diap_tr9"
-                :value="item.value"
-                :key="item.index"
-              >
-                {{ item.text }}
-              </option>
-            </select>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
-    </transition>
+    </div>
+
+    <div class="border border-gray-300 rounded-md p-2 pt-0">
+      <div class="flex w-full justify-start items-end">
+        <div class="w-1/6 pl-2">
+          <button
+            type="button"
+            @click="add('g')"
+            class="
+              focus:outline-none
+              hover:text-blue-600
+              text-green-500 text-2xl
+              font-semibold
+              pt-0
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="w-1/4 text-pink-700 font-bold text-left pb-1">
+          <input
+            class="w-full appearance-none border-0"
+            v-model="project.gvs.data.name_sys"
+            type="text"
+          />
+        </div>
+
+        <div class="w-1/5 pl-1 pb-1">
+          <label>Кчн</label>
+          <input
+            class="w-full appearance-none"
+            v-model.number="project.isx.kchn"
+            type="number"
+          />
+        </div>
+        <div class="w-1/5 pl-1 pb-1">
+          <label>t3, C</label>
+          <input
+            class="w-full appearance-none"
+            v-model.number="project.isx.t3"
+            type="number"
+          />
+        </div>
+        <div class="w-1/5 pl-1 pb-1">
+          <label>t4, C</label>
+          <input
+            class="w-full appearance-none"
+            v-model.number="project.isx.t4"
+            type="number"
+          />
+        </div>
+      </div>
+
+      <div
+        class="flex justify-between items-end mt-1"
+        v-for="(item, i) in project.gvs_arr"
+      >
+        <div class="flex w-11/12">
+          <div class="w-1/3">
+            <label>Qmax, Гкал/ч</label>
+            <input
+              class="w-full appearance-none"
+              v-model.number="item.q"
+              v-on:input="qgvs('qm', item.id)"
+              type="number"
+              step="0.0000001"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              maxlength="8"
+            />
+          </div>
+          <div class="w-1/3 pl-1">
+            <label>Qs, Гкал/ч</label>
+            <input
+              class="w-full appearance-none"
+              v-model.number="item.qs"
+              v-on:input="qgvs('qs', item)"
+              type="number"
+              step="0.0000001"
+              oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+              maxlength="8"
+            />
+          </div>
+          <div class="w-5/6 pl-1 pb-1">
+            <label>название</label>
+            <input class="w-full" v-model="item.name" type="text" />
+          </div>
+        </div>
+        <div class="flex w-1/12">
+          <div class="w-1/6 pl-1 text-right text-red-600">
+            <button
+              type="button"
+              @click="remove('g', item.id)"
+              class="focus:outline-none hover:text-blue-600 text-3xl"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 import { ref, watch } from "vue";
-import opt from "../../utils/selects.js";
-import { podbor, diap_tr } from "../../utils/FuncUu.js";
-import { speed, no_mod, no_i6 } from "../../utils/checks.js";
-
+import Axios from "axios";
+import { rash_co, rash_gvs } from "../../utils/FuncItp.js";
+import { useStore } from "vuex";
+import Regions from "../../utils/regions.js";
 export default {
-  name: "Home",
+  name: "Itp",
   components: {},
   props: {
     project: { type: Object, required: true },
   },
-  setup(props, { emit }) {
+  setup(props) {
+    const store = useStore();
+    const rekv_store = ref(store.state.Rekv);
     const project = ref(props.project);
-    const du1 = ref(podbor(project.value.rash.ot.G1v));
-    const du9 = ref(podbor(project.value.rash.ot.G9v));
-    const diap_tr1 = ref(diap_tr(project.value.ot.uu.di1));
-    const diap_tr2 = ref(diap_tr(project.value.ot.uu.di2));
-    const diap_tr9 = ref(diap_tr(project.value.ot.uu.di9));
-    const no_co = (r) => emit("no_co", r);
-    const Lim1 = ref(speed(project.value.gidr.gdr1.V));
-    const Lim2 = ref(speed(project.value.gidr.gdr2.V));
-    const Lim9 = ref(speed(project.value.gidr.gdr9.V));
-    const modif = ref(no_mod(project.value.ot.uu.di1));
-    const no6 = ref(no_i6(project.value.ot.uu.di1));
-    const nogrz = ref(false);
-    const nogrz9 = ref(false);
-    const no_filter = ref(false);
-    const no_fuco = ref(true);
+    const nas_pu = ref([]);
 
     function check() {
-      project.value.ot.uu.tipL == "ml"
-        ? ((modif.value = no_mod(project.value.ot.uu.di1)),
-          (project.value.ot.uu.filter = 0),
-          (no_filter.value = true))
-        : ((modif.value = false), (no_filter.value = false));
-
-      project.value.ot.uu.tipIm1 == 6
-        ? (no6.value = no_i6(project.value.ot.uu.di1))
-        : (no6.value = false);
-
-      project.value.ot.uu.dut1 < 40
-        ? project.value.ot.uu.filter == 2
-          ? (nogrz.value = true)
-          : (nogrz.value = false)
-        : (nogrz.value = false);
-
-      project.value.ot.uu.dut9 < 40
-        ? project.value.ot.uu.filter_p == 2
-          ? (nogrz9.value = true)
-          : (nogrz9.value = false)
-        : (nogrz9.value = false);
-
-      if (project.value.ot.isx.qco > 0) {
-        modif.value || no6.value || nogrz.value || nogrz9.value
-          ? no_co(true)
-          : no_co(false);
-      } else {
-        no_co(true);
-      }
-
-      if (project.value.ot.isx.qco > 0) {
-        project.value.ot.isx.qco > 100
-          ? (project.value.ot.isx.qco = project.value.ot.isx.qco / 1000)
-          : "";
-        project.value.data.type_gvs == "open" ||
-        project.value.data.type_gvs == "open_notim_cirk" ||
-        project.value.data.type_gvs == "open_notim_tup"
-          ? ((project.value.ot.isx.fuCo = 1), (no_fuco.value = true))
-          : (no_fuco.value = false);
-      } else {
-        no_fuco.value = true;
-      }
-      if (project.value.ot.isx.qvent > 0) {
-        project.value.ot.isx.qvent > 100
-          ? (project.value.ot.isx.qvent = project.value.ot.isx.qvent / 1000)
-          : "";
-      }
+      project.value.rash.ot_sum.q > 0 && project.value.rash.gvs_sum.q > 0
+        ? project.value.rash.gvs_sum.q / project.value.rash.ot_sum.q <= 0.2 ||
+          project.value.rash.gvs_sum.q / project.value.rash.ot_sum.q > 1
+          ? (project.value.gvs.data.sx = 1)
+          : (project.value.gvs.data.sx = 2)
+        : "";
     }
-    check();
-    watch(project.value, () => check());
-    // ot
-    watch(
-      () => project.value.rash.ot.G1v,
-      () => {
-        project.value.rash.ot.G1v > 0
-          ? ((du1.value = podbor(project.value.rash.ot.G1v)),
-            (project.value.ot.uu.di1 = du1.value.d),
-            (du9.value = podbor(project.value.rash.ot.G9v)),
-            (project.value.ot.uu.di9 = du9.value.d),
-            (Lim1.value = speed(project.value.gidr.gdr1.V)),
-            (Lim2.value = speed(project.value.gidr.gdr2.V)))
-          : "";
-      }
-    );
-    // di1
-    watch(
-      () => project.value.ot.uu.di1,
-      () => {
-        project.value.ot.uu.di1 == 0
-          ? ((project.value.ot.uu.dut1 = 0), (project.value.ot.uu.dut2 = 0))
-          : "";
-        project.value.ot.uu.di2 = project.value.ot.uu.di1;
-        diap_tr1.value = diap_tr(project.value.ot.uu.di1);
-        diap_tr2.value = diap_tr1.value;
-        if (project.value.ot.uu.di1 > 0) {
-          diap_tr1.value.find((x) => x.value === project.value.ot.uu.dut1)
-            ? ""
-            : (project.value.ot.uu.dut1 = diap_tr1.value[1].value);
-        }
-        if (project.value.ot.uu.di2 > 0) {
-          diap_tr2.value.find((x) => x.value === project.value.ot.uu.dut2)
-            ? ""
-            : (project.value.ot.uu.dut2 = diap_tr2.value[1].value);
-        }
-        Lim1.value = speed(project.value.gidr.gdr1.V);
-        Lim2.value = speed(project.value.gidr.gdr2.V);
-      }
-    );
-    // di9
-    watch(
-      () => project.value.ot.uu.di9,
-      () => {
-        project.value.ot.uu.di1 == 0 ? (project.value.ot.uu.dut9 = 0) : "";
 
-        diap_tr9.value = diap_tr(project.value.ot.uu.di9);
+    const add = (t) => {
+      let j;
+      switch (t) {
+        case "o":
+          j = project.value.ot_arr.length;
+          project.value.ot_arr.push({
+            id: Date.now().toString(),
+            name: `Система отопления ${j + 1}`,
+            q: null,
+            qkvt: null,
+            g_set: null,
+            g_sys: null,
+            tn: null,
+            t_set: project.value.isx.t1 + "/" + project.value.isx.t2,
+            t_sys: project.value.isx.t11 + "/" + project.value.isx.t21,
+          });
+          break;
+        case "v":
+          j = project.value.vent_arr.length;
+          project.value.vent_arr.push({
+            id: Date.now().toString(),
+            name: `Вентиляция ${j + 1}`,
+            q: null,
+            qkvt: null,
+            g_set: null,
+            g_sys: null,
+            tn: null,
+            t_set: project.value.isx.t1 + "/" + project.value.isx.t2,
+            t_sys: project.value.isx.t1 + "/" + project.value.isx.t2,
+          });
+          break;
+        case "g":
+          j = project.value.gvs_arr.length;
+          project.value.gvs_arr.push({
+            id: Date.now().toString(),
+            name: `ГВС ${j + 1}`,
+            q: null,
+            qkvt: null,
+            qs: null,
+            g_set: null,
+            g_sys: null,
+            g_cirk: null,
+            g_set_l: null,
+            g_sys_l: null,
+            t4: null,
+            t_set_z: project.value.isx.t1 + "/" + project.value.isx.t2,
+            t_sys_z: project.value.isx.txv_z + "/" + project.value.isx.t3,
+            t_set_l: project.value.isx.t1_l + "/" + project.value.isx.t2_l,
+            t_sys_l: project.value.isx.txv_l + "/" + project.value.isx.t3,
+          });
+          break;
+        default:
+          break;
+      }
+    };
 
-        if (project.value.ot.uu.di9 > 0) {
-          diap_tr9.value.find((x) => x.value === project.value.ot.uu.dut9)
-            ? ""
-            : (project.value.ot.uu.dut9 = diap_tr9.value[1].value);
-          Lim9.value = speed(project.value.gidr.gdr9.V);
-        } else {
-          project.value.ot.isx.sx_ot = 0;
-        }
+    const remove = (t, n) => {
+      switch (t) {
+        case "o":
+          project.value.ot_arr.splice(
+            project.value.ot_arr.findIndex((r) => r.id == n),
+            1
+          );
+          break;
+        case "v":
+          project.value.vent_arr.splice(
+            project.value.vent_arr.findIndex((r) => r.id == n),
+            1
+          );
+          break;
+        case "g":
+          project.value.gvs_arr.splice(
+            project.value.gvs_arr.findIndex((r) => r.id == n),
+            1
+          );
+          break;
+        default:
+          break;
       }
-    );
-    // dut1
-    watch(
-      () => project.value.ot.uu.dut1,
-      () => {
-        project.value.ot.uu.dut2 = project.value.ot.uu.dut1;
+    };
+
+    watch(project.value, () => {
+      for (let q of project.value.ot_arr.values()) {
+        q.q > 100 ? (q.q = q.q / 1000) : "";
+        q.g_set = rash_co(q.q, project.value.isx.t1, project.value.isx.t2);
+        q.g_sys = rash_co(q.q, project.value.isx.t11, project.value.isx.t21);
       }
-    );
-    // sx_ot
-    watch(
-      () => project.value.ot.isx.sx_ot,
-      () => {
-        project.value.ot.isx.sx_ot > 0 && project.value.ot.uu.di9 == 0
-          ? ((du9.value = podbor(project.value.rash.ot.G9v)),
-            (project.value.ot.uu.di9 = du9.value.d))
-          : "";
+      for (let q of project.value.vent_arr.values()) {
+        q.q > 100 ? (q.q = q.q / 1000) : "";
+        q.g_set = rash_co(q.q, project.value.isx.t1, project.value.isx.t2);
+        q.g_sys = q.g_set;
       }
-    );
-    // fuCO
-    watch(
-      () => project.value.data.type_gvs,
-      () => {
-        project.value.data.type_gvs == "close" ||
-        project.value.data.type_gvs == "1st" ||
-        project.value.data.type_gvs == "2st"
-          ? (project.value.ot.isx.fuCo = 0)
-          : "";
+
+      for (let q of project.value.gvs_arr.values()) {
+        q.q > 100 ? (q.q = q.q / 1000) : "";
+        q.t_set_z = project.value.isx.t1 + "/" + project.value.isx.t2;
+        q.t_sys_z = project.value.isx.t3 + "/" + project.value.isx.txv_z;
+        q.t_set_l = project.value.isx.t1_l + "/" + project.value.isx.t2_l;
+        q.t_sys_l = project.value.isx.t3 + "/" + project.value.isx.txv_l;
       }
-    );
+      for (let q of project.value.gvs_arr.values()) {
+        q.qs > 100 ? (q.qs = q.qs / 1000) : "";
+        let g = rash_gvs(
+          q.q,
+          q.qs,
+          project.value.isx.t3,
+          project.value.isx.t4,
+          project.value.isx.t1_l,
+          project.value.isx.t2_l,
+          project.value.isx.txv_z,
+          project.value.isx.txv_l,
+          project.value.isx.kchn,
+          project.value.isx.ktp,
+          project.value.gvs.data.sx
+        );
+
+        q.g_set = +g.Gset_max_z;
+        q.g_sys = +g.Gsys_max_z;
+        q.g_set_l = +g.Gset_max_l;
+        q.g_sys_l = +g.Gsys_max_l;
+        q.g_set_ = g.Gset_max_z + "/" + g.Gset_sr_z;
+        q.g_sys_ = g.Gsys_max_z + "/" + g.Gsys_sr_z;
+        q.g_set_l_ = +g.Gset_max_l + "/" + g.Gset_sr_l;
+        q.g_sys_l_ = +g.Gsys_max_l + "/" + g.Gsys_sr_l;
+        q.g_cirk = +g.Gsys_circ;
+        q.t4 = +project.value.isx.t4;
+      }
+
+      if (+project.value.isx.kchn > 0) {
+        project.value.gvs_arr.map((r) =>
+          r.q > 0 ? (r.qs = +(r.q / project.value.isx.kchn).toFixed(6)) : ""
+        );
+      } else {
+        project.value.gvs_arr.map((r) => {
+          r.q = null;
+          r.qs = null;
+        });
+      }
+
+      check();
+    });
+
+    const qgvs = (m, id) => {
+      let a = project.value.gvs_arr.findIndex((r) => r.id == id);
+      switch (m) {
+        case "qm":
+          project.value.gvs_arr[a].q > 0
+            ? (project.value.gvs_arr[a].qs = +(
+                project.value.gvs_arr[a].q / project.value.isx.kchn
+              ).toFixed(6))
+            : (project.value.gvs_arr[a].qs = null);
+          break;
+        case "qs":
+          project.value.gvs_arr[a].qs > 0
+            ? (project.value.gvs_arr[a].qs = +(
+                project.value.gvs_arr[a].qs * project.value.isx.kchn
+              ).toFixed(6))
+            : (project.value.gvs_arr[a].q = null);
+          break;
+      }
+    };
+
+    const openPDF = () => {
+      let f = document.getElementById("formTS");
+      f.action = "./pdf/project/itp.php";
+      let a = document.createElement("input");
+      a.type = "hidden";
+      a.value = JSON.stringify(project.value);
+      a.name = "A";
+      f.appendChild(a);
+      let r = document.createElement("input");
+      r.type = "hidden";
+      r.value = JSON.stringify(rekv_store.value.R);
+      r.name = "R";
+      f.appendChild(r);
+      f.submit();
+      f.removeChild(a);
+      f.removeChild(r);
+    };
+    const nasp = () => {
+      nas_pu.value = [];
+      if (project.value.data.region != 0) {
+        Axios.post("./pdf/project/regions.php", {
+          sReg: project.value.data.region,
+        })
+          .then((response) => {
+            nas_pu.value = response.data;
+            project.value.data.naspunkt = nas_pu.value[0];
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      } else {
+        project.value.data.naspunkt = "";
+      }
+    };
 
     return {
-      opt,
       project,
-      diap_tr1,
-      diap_tr2,
-      diap_tr9,
-      Lim1,
-      Lim2,
-      Lim9,
-      no6,
-      modif,
-      no_filter,
-      nogrz,
-      nogrz9,
-      no_fuco,
+      add,
+      remove,
+      qgvs,
+      openPDF,
+      Regions,
+      nasp,
+      nas_pu,
     };
   },
 };
 </script>
-<style >
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
-}
-.bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
-}
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-</style>

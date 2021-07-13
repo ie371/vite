@@ -30,13 +30,13 @@
       >
         <div v-show="visible" class="relative w-screen max-w-3xl z-10">
           <div
-            class="h-full flex flex-col p-2 bg-gray-50 shadow-xl overflow-y-scroll z-20"
+            class="h-full flex flex-col p-2 bg-gray-50 shadow-xl z-20 dark:bg-gray-800"
           >
             <div class="sticky top-0 flex justify-end">
               <button
                 type="button"
                 @click="close"
-                class="rounded-md text-gray-800 hover:text-gray-600 focus:outline-none"
+                class="rounded-md text-gray-800 dark:text-white hover:text-gray-600 focus:outline-none"
               >
                 <svg
                   class="h-6 w-6"

@@ -1,11 +1,11 @@
 <template>
   <header
-    class="sticky top-0 w-screen bg-gray-100 z-20 sm:flex sm:justify-between sm:items-center sm:px-4 sm:py-3"
+    class="sticky top-0 dark:bg-gray-700 bg-gray-100 z-20 sm:flex sm:justify-between sm:items-center sm:px-6 sm:py-3"
   >
     <div class="flex items-center justify-between px-4 py-3 sm:p-0">
       <div>
         <button
-          class="text-gray-500 hover:text-white focus:text-white focus:outline-none hover:bg-gray-500 rounded-sm"
+          class="text-gray-500 dark:text-white hover:text-white focus:text-white focus:outline-none hover:bg-gray-500 rounded-sm"
           aria-label="Open Menu"
           @click="toggle"
         >
@@ -51,17 +51,17 @@
     >
       <router-link
         to="/"
-        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        class="block px-2 py-1 dark:text-white text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
         >ТС</router-link
       >
       <router-link
         to="/uuhvs"
-        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        class="block px-2 py-1 dark:text-white text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
         >ХВС</router-link
       >
       <router-link
         to="/itp"
-        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        class="block px-2 py-1 dark:text-white text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
         >ИТП</router-link
       >
     </nav>
@@ -74,16 +74,10 @@
       <button
         @click.prevent="signout"
         type="button"
-        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
+        class="block px-2 py-1 dark:text-white text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
       >
         Выход
       </button>
-
-      <!-- <router-link
-        to="/about"
-        class="block px-2 py-1 text-gray-600 font-semibold rounded hover:bg-gray-500 hover:text-white"
-        >Выход</router-link
-      > -->
     </nav>
   </header>
   <form id="formTS" method="post" target="_blank" enctype="multipart/form-data">
@@ -91,7 +85,7 @@
       <SideLeft :visible="visible" @close_rekv="toggle" />
     </div>
 
-    <div class="w-screen mx-auto px-2 py-2 mt-2"><router-view /></div>
+    <div class="dark:bg-gray-800 mx-auto px-3 mt-4"><router-view /></div>
   </form>
 </template>
 

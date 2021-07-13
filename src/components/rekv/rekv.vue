@@ -1,5 +1,5 @@
 <template>
-  <div class="z-50">
+  <div class="z-50 dark:bg-gray-800 h-screen">
     <!-- Реквизиты проекта-->
     <div>
       <div class="w-full text-center text-blue-800 font-bold">
@@ -175,7 +175,15 @@
           <button
             type="button"
             @click="savePr"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            class="
+              bg-blue-500
+              hover:bg-blue-700
+              text-white
+              font-bold
+              py-2
+              px-4
+              rounded
+            "
           >
             Save
           </button>
@@ -188,7 +196,15 @@
           <button
             type="button"
             @click="loadPr"
-            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+            class="
+              bg-green-500
+              hover:bg-green-700
+              text-white
+              font-bold
+              py-2
+              px-4
+              rounded
+            "
           >
             Load
           </button>
@@ -204,6 +220,7 @@ import FileInput from "../filePost.vue";
 import { saveAs } from "file-saver";
 import { OBJ_TS } from "../../utils/classTS";
 import { OBJ_HVS } from "../../utils/classHVS";
+import { OBJ_ITP } from "../../utils/classITP";
 
 export default {
   name: "Rekvizit",
@@ -214,6 +231,7 @@ export default {
     const rekv_data = ref(store.state.Rekv);
     const project_store_ts = ref(store.state.UuTs.project);
     const project_store_hvs = ref(store.state.UuHvs.project);
+    const project_store_itp = ref(store.state.ITP.project);
     const file = ref(null);
     const sfile = ref(null);
     const load = ref(null);
@@ -227,14 +245,18 @@ export default {
       let join = {
         uuto: store.state.UuTs.project,
         uuhvs: store.state.UuHvs.project,
+        itp: store.state.ITP.project,
         rekv: store.state.Rekv,
       };
-      let obj = JSON.stringify(join);
+
+      let obj = JSON.stringify(join, null, " ");
+
       var file = new File([obj], nam + ".txt", {
         type: "text/plain;charset=utf-8",
       });
       saveAs(file);
     };
+
     const input_json = () => {
       if (sfile.value.file) {
         const reader = new FileReader();
@@ -248,41 +270,69 @@ export default {
         let obj = JSON.parse(load.value);
         rekv_data.value.R = obj.rekv.R;
 
-        if (!project_store_ts.value.OBJ_TS) {
-          const add_class = ref(
-            new OBJ_TS({
-              DATA: obj.uuto.OBJ_TS.data,
-              OT: obj.uuto.OBJ_TS.ot,
-              GVS: obj.uuto.OBJ_TS.gvs,
-              ATM: obj.uuto.OBJ_TS.atm,
-              DOP: obj.uuto.OBJ_TS.dop,
-            })
-          );
-          project_store_ts.value.OBJ_TS = add_class.value;
-        } else {
-          project_store_ts.value.OBJ_TS.data = obj.uuto.OBJ_TS.data;
-          project_store_ts.value.OBJ_TS.ot = obj.uuto.OBJ_TS.ot;
-          project_store_ts.value.OBJ_TS.gvs = obj.uuto.OBJ_TS.gvs;
-          project_store_ts.value.OBJ_TS.atm = obj.uuto.OBJ_TS.atm;
-          project_store_ts.value.OBJ_TS.dop = obj.uuto.OBJ_TS.dop;
+        if (obj.uuto.OBJ_TS) {
+          if (!project_store_ts.value.OBJ_TS) {
+            const add_class_ts = ref(
+              new OBJ_TS({
+                DATA: obj.uuto.OBJ_TS.data,
+                OT: obj.uuto.OBJ_TS.ot,
+                GVS: obj.uuto.OBJ_TS.gvs,
+                ATM: obj.uuto.OBJ_TS.atm,
+                DOP: obj.uuto.OBJ_TS.dop,
+              })
+            );
+            project_store_ts.value.OBJ_TS = add_class_ts.value;
+          } else {
+            project_store_ts.value.OBJ_TS.data = obj.uuto.OBJ_TS.data;
+            project_store_ts.value.OBJ_TS.ot = obj.uuto.OBJ_TS.ot;
+            project_store_ts.value.OBJ_TS.gvs = obj.uuto.OBJ_TS.gvs;
+            project_store_ts.value.OBJ_TS.atm = obj.uuto.OBJ_TS.atm;
+            project_store_ts.value.OBJ_TS.dop = obj.uuto.OBJ_TS.dop;
+          }
         }
-        if (!project_store_hvs.value.OBJ_HVS) {
-          const add_class = ref(
-            new OBJ_HVS({
-              DATA: obj.uuhvs.OBJ_HVS.data,
-              HVS: obj.uuhvs.OBJ_HVS.hvs,
-              ATM: obj.uuhvs.OBJ_HVS.atm,
-              DOP: obj.uuhvs.OBJ_HVS.dop,
-            })
-          );
-          project_store_hvs.value.OBJ_HVS = add_class.value;
-        } else {
-          project_store_hvs.value.OBJ_HVS.data = obj.uuhvs.OBJ_HVS.data;
-          project_store_hvs.value.OBJ_HVS.hvs = obj.uuhvs.OBJ_HVS.hvs;
-          project_store_hvs.value.OBJ_HVS.atm = obj.uuhvs.OBJ_HVS.atm;
-          project_store_hvs.value.OBJ_HVS.dop = obj.uuhvs.OBJ_HVS.dop;
+        if (obj.uuhvs.OBJ_HVS) {
+          if (!project_store_hvs.value.OBJ_HVS) {
+            const add_class_hvs = ref(
+              new OBJ_HVS({
+                DATA: obj.uuhvs.OBJ_HVS.data,
+                HVS: obj.uuhvs.OBJ_HVS.hvs,
+                ATM: obj.uuhvs.OBJ_HVS.atm,
+                DOP: obj.uuhvs.OBJ_HVS.dop,
+              })
+            );
+            project_store_hvs.value.OBJ_HVS = add_class_hvs.value;
+          } else {
+            project_store_hvs.value.OBJ_HVS.data = obj.uuhvs.OBJ_HVS.data;
+            project_store_hvs.value.OBJ_HVS.hvs = obj.uuhvs.OBJ_HVS.hvs;
+            project_store_hvs.value.OBJ_HVS.atm = obj.uuhvs.OBJ_HVS.atm;
+            project_store_hvs.value.OBJ_HVS.dop = obj.uuhvs.OBJ_HVS.dop;
+          }
         }
-
+        if (obj.itp.OBJ_ITP) {
+          if (!project_store_itp.value.OBJ_ITP) {
+            const add_class_itp = ref(
+              new OBJ_ITP({
+                DATA: obj.itp.OBJ_ITP.data,
+                ISX: obj.itp.OBJ_ITP.isx,
+                IN: obj.itp.OBJ_ITP.in,
+                OT: obj.itp.OBJ_ITP.ot,
+                VENT: obj.itp.OBJ_ITP.vent,
+                GVS: obj.itp.OBJ_ITP.gvs,
+              })
+            );
+            project_store_itp.value.OBJ_ITP = add_class_itp.value;
+          } else {
+            project_store_itp.value.OBJ_ITP.data = obj.itp.OBJ_ITP.data;
+            project_store_itp.value.OBJ_ITP.isx = obj.itp.OBJ_ITP.isx;
+            project_store_itp.value.OBJ_ITP.in = obj.itp.OBJ_ITP.in;
+            project_store_itp.value.OBJ_ITP.ot = obj.itp.OBJ_ITP.ot;
+            project_store_itp.value.OBJ_ITP.vent = obj.itp.OBJ_ITP.vent;
+            project_store_itp.value.OBJ_ITP.gvs = obj.itp.OBJ_ITP.gvs;
+            project_store_itp.value.OBJ_ITP.ot_arr = obj.itp.OBJ_ITP.ot_arr;
+            project_store_itp.value.OBJ_ITP.vent_arr = obj.itp.OBJ_ITP.vent_arr;
+            project_store_itp.value.OBJ_ITP.gvs_arr = obj.itp.OBJ_ITP.gvs_arr;
+          }
+        }
         load.value = null;
         sfile.value = null;
       }

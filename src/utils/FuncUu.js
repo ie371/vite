@@ -44,14 +44,14 @@ export function podbor(Gv) {
   return { d: d[0], dt: d[1] };
 }
 export function rash_co(isx) {
-  let { q, t1, t2, p1, p2 } = isx;
+  let { q, t1, t2, p1, p2, qco } = isx;
   let G1m = +((q * 1000) / (t1 - t2)).toFixed(3);
   let G2m = G1m;
   let PL1 = +ro(t1, p1);
   let PL2 = +ro(t2, p2);
   let G1v = +(G1m / PL1).toFixed(3);
   let G2v = +(G2m / PL2).toFixed(3);
-  let G9v = +(q * 3.6).toFixed(2);
+  let G9v = +(qco * 3.6).toFixed(2);
   let G1m_ot = G1m;
   let G2m_ot = G2m;
   let G1v_ot = G1v;
